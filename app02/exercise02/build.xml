@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<project name="exercise02" basedir="." default="run">
+
+    <path id="cp">
+	<fileset dir="lib">
+	    <include name="**/*.jar"/>
+	</fileset>
+	<pathelement path="build"/>
+    </path>
+
+    <target name="clean">
+	<delete>
+	    <fileset dir="build">
+		<include name="**/*.class"/>
+	    </fileset>
+	    <fileset dir="doc">
+		<include name="**/*"/>
+	    </fileset>
+	</delete>
+    </target>
+
+    <target name="build" depends="clean">
+	<mkdir dir="build"/>
+	<javac destdir="build" srcdir="src" includeantruntime="true">
+	    <classpath refid="cp"/>
+	</javac>
+    </target>
+
+    <target name="run" depends="build">
+	<java classname="Main">
+	    <classpath refid="cp"/>
+	</java>
+    </target>
+
+    <target name="doc" depends="build">
+	<javadoc sourcepath="src" destdir="doc" access="private">
+	    <classpath refid="cp"/>
+	</javadoc>
+    </target>
+
+</project>

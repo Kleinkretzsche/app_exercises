@@ -1,0 +1,38 @@
+<project name="Uebung05" default="test">
+
+  <property name="src" location="src"/>
+  <property name="build" location="build"/>
+  <property name="target" location="target"/>
+  <property name="lib" location="lib"/>
+
+  <path id="build.classpath">
+    <fileset dir="lib">
+      <include name="**/*.jar"/>
+    </fileset>
+  </path>
+
+  <target name="init">
+    <mkdir dir="${build}"/>
+    <mkdir dir="${target}"/>
+  </target>
+
+  <target name="compile" depends="init">
+    <javac srcdir="${src}" destdir="${build}" includeantruntime="false">
+      <classpath refid="build.classpath"/>
+    </javac>
+  </target>
+
+  <target name="test" depends="compile">
+    <java classname="app.exercise.testing.SAGTester" fork="true">
+      <classpath>
+	<pathelement location="${build}"/>
+	<pathelement location="${lib}/*"/>
+      </classpath>
+    </java>
+  </target>
+
+  <target name="clean" description="clean up build directory">
+    <delete dir="${build}"/>
+    <delete dir="${target}"/>
+  </target>
+</project>

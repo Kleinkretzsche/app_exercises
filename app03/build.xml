@@ -1,0 +1,41 @@
+<project name="Uebung03" default="compile">
+
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property name="docs" location="docs"/>
+    <property name="jarfile" location="lib/RedBlackTreeDrawer.jar"/>
+    <property name="args" value = "1 1 1 2 1 3 1 4 1 5 3 2"/>
+
+
+    <target name="init">
+        <!-- Create the build and javadoc directory -->
+        <mkdir dir="${build}"/>
+        <mkdir dir="${docs}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="${src}" destdir="${build}" classpath="${jarfile}" includeantruntime="false"/>
+    </target>
+
+    <target name="test" depends="compile">
+        <java classname="app.exercise.testing.BSTreeTester" fork="true">
+            <classpath>
+                <pathelement location="${build}"/>
+                <pathelement location="${jarfile}"/>
+            </classpath>
+            <!-- default args elements replace with -Dargs "1 2 3 4 ..."-->
+            <arg line="${args}"/>
+        </java>
+    </target>
+
+
+
+    <target name="document" depends="init">
+        <javadoc private="true" packagenames="app.exercise.*" sourcepath="src" destdir="${docs}" />
+    </target>
+
+    <target name="clean" description="clean up build directory">
+        <delete dir="${build}"/>
+        <delete dir="${docs}"/>
+    </target>
+</project>
